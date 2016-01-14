@@ -10,7 +10,7 @@ export LANG=en_US.UTF-8
 mainReportMail=""
 
 ###########################
-# Хранение в AWS		  #
+# Хранение в AWS          #
 ###########################
 
 # Имя хранилища
@@ -33,8 +33,7 @@ filesBackupsDir="${scriptDir}/backups/files"
 filesExclude="${scriptDir}/filesExclude"
 
 # Параметры запуска tar
-filesTarCreateParam="-create --ignore-failed-read --one-file-system \
---gzip --preserve-permissions --recursion --sparse"
+filesTarCreateParam="-create --ignore-failed-read --one-file-system --gzip"
 
 # Использовать AWS для хранения файловых бекапов 
 filesUseAws=no
@@ -69,4 +68,4 @@ mysqlDatabases=""
 mysqlBackupsDir="${scriptDir}/backups/mysql"
 
 # Использовать AWS для хранения MySQL дампов 
-mysqlUseAws=yes
+mysqlUseAws=no
