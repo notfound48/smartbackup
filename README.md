@@ -13,5 +13,8 @@
 
 ## Подготовка к установке
 ```
-Установка требуемого софта
+sudo apt-get update && apt-get install git s3cmd
+
+git clone https://github.com/notfound48/amazonBackup.git
+
 ```
