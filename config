@@ -3,47 +3,70 @@
 # Основные                #
 ###########################
 
-export LANG=en_US.UTF-8			# Настройки локали
+# Настройки локали
+export LANG=en_US.UTF-8
 
-mainReportMail=""				# email для извещений
+# email для извещений
+mainReportMail=""
 
 ###########################
 # Хранение в AWS		  #
 ###########################
 
-awsBucketName=""				# Имя хранилища
+# Имя хранилища
+awsBucketName=""
 
 ###########################
 # Настройки бэкапа файлов #
 ###########################
 
-filesTargetDir=""				# Резервируемый каталог(и)
+# Резервируемый каталог(и)
+filesTargetDir=""
 
-filesMonthDay=01														# День в который делать полный бекап (формат 01)
-filesBackupsDir="${scriptDir}/backups/files"							# Каталог хранения локальных бекапов файлов
-filesExclude="${scriptDir}/filesExclude"								# Список исключаемых файлов
+# День в который делать полный бекап (формат 01)
+filesMonthDay=01
+
+# Каталог хранения локальных бекапов файлов
+filesBackupsDir="${scriptDir}/backups/files"
+
+# Список исключаемых файлов					
+filesExclude="${scriptDir}/filesExclude"
+
+# Параметры запуска tar
 filesTarCreateParam="-create --ignore-failed-read --one-file-system \
---gzip --preserve-permissions --recursion --sparse"						# Параметры запуска tar
+--gzip --preserve-permissions --recursion --sparse"
 
-filesUseAws=no															# Использовать AWS для хранения файловых бекапов 
+# Использовать AWS для хранения файловых бекапов 
+filesUseAws=no
 
 ###########################
 # Настройки бэкапа MySQL  #
 ###########################
 
-mysqlMakeBackups=no			# Резервировать MySQL
+# Резервировать MySQL
+mysqlMakeBackups=no
 
-mysqlHost="127.0.0.1"		# Адрес MySQL сервера
-mysqlPort="3306"			# Порт MySQL сервера
-mysqlUser=""				# Пользователь MySQL
-mysqlPassword=""			# Пароль MySQL
-mysqlDatabases=""			# Перечень Баз для резервирования
-							# Варианты:
-							# dbname
-							# --databases db1 db2 db3
-							# -all-databases
+# Адрес MySQL сервера
+mysqlHost="127.0.0.1"
 
+# Порт MySQL сервера
+mysqlPort="3306"
 
-mysqlBackupsDir="${scriptDir}/backups/mysql"	# Каталог хранения локальных бекапов
+# Пользователь MySQL
+mysqlUser=""
 
-mysqlUseAws=yes									# Использовать AWS для хранения MySQL дампов 
+# Пароль MySQL
+mysqlPassword=""
+
+# Перечень Баз для резервирования
+# Варианты:
+#	dbname
+#	--databases db1 db2 db3
+#	-all-databases
+mysqlDatabases=""
+
+# Каталог хранения локальных бекапов
+mysqlBackupsDir="${scriptDir}/backups/mysql"
+
+# Использовать AWS для хранения MySQL дампов 
+mysqlUseAws=yes
