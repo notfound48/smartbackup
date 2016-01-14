@@ -1,0 +1,49 @@
+
+###########################
+# Основные                #
+###########################
+
+export LANG=en_US.UTF-8			# Настройки локали
+
+mainReportMail=""				# email для извещений
+
+###########################
+# Хранение в AWS		  #
+###########################
+
+awsBucketName=""				# Имя хранилища
+
+###########################
+# Настройки бэкапа файлов #
+###########################
+
+filesTargetDir=""				# Резервируемый каталог(и)
+
+filesMonthDay=01														# День в который делать полный бекап (формат 01)
+filesBackupsDir="${scriptDir}/backups/files"							# Каталог хранения локальных бекапов файлов
+filesExclude="${scriptDir}/filesExclude"								# Список исключаемых файлов
+filesTarCreateParam="-create --ignore-failed-read --one-file-system \
+--gzip --preserve-permissions --recursion --sparse"						# Параметры запуска tar
+
+filesUseAws=no															# Использовать AWS для хранения файловых бекапов 
+
+###########################
+# Настройки бэкапа MySQL  #
+###########################
+
+mysqlMakeBackups=no			# Резервировать MySQL
+
+mysqlHost="127.0.0.1"		# Адрес MySQL сервера
+mysqlPort="3306"			# Порт MySQL сервера
+mysqlUser=""				# Пользователь MySQL
+mysqlPassword=""			# Пароль MySQL
+mysqlDatabases=""			# Перечень Баз для резервирования
+							# Варианты:
+							# dbname
+							# --databases db1 db2 db3
+							# -all-databases
+
+
+mysqlBackupsDir="${scriptDir}/backups/mysql"	# Каталог хранения локальных бекапов
+
+mysqlUseAws=yes									# Использовать AWS для хранения MySQL дампов 
