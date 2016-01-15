@@ -6,7 +6,7 @@
 # Настройки локали
 export LANG=en_US.UTF-8
 
-# email для извещений
+# Почта для извещений
 mainReportMail=""
 
 ###########################
@@ -20,22 +20,22 @@ awsBucketName=""
 # Настройки бэкапа файлов #
 ###########################
 
-# Резервируемый каталог(и)
+# Резервируемый каталог
 filesTargetDir=""
 
-# День в который делать полный бекап (формат 01)
-filesMonthDay=01
+# Количество месяцев хранения
+filesMonthsCount=3
 
-# Каталог хранения локальных бекапов файлов
+# Каталог хранения локальных бекапов файлов							
 filesBackupsDir="${scriptDir}/backups/files"
 
-# Список исключаемых файлов					
+# Список исключаемых файлов
 filesExclude="${scriptDir}/filesExclude"
 
 # Параметры запуска tar
-filesTarCreateParam="-create --ignore-failed-read --one-file-system --gzip"
+filesTarCreateParam="--create --ignore-failed-read --gzip"						
 
-# Использовать AWS для хранения файловых бекапов 
+# Использовать AWS для хранения файловых бекапов
 filesUseAws=no
 
 ###########################
@@ -51,7 +51,7 @@ mysqlHost="127.0.0.1"
 # Порт MySQL сервера
 mysqlPort="3306"
 
-# Пользователь MySQL
+# Пользователь MySQL														
 mysqlUser=""
 
 # Пароль MySQL
@@ -59,13 +59,13 @@ mysqlPassword=""
 
 # Перечень Баз для резервирования
 # Варианты:
-#	dbname
-#	--databases db1 db2 db3
-#	-all-databases
+# dbname
+# --databases db1 db2 db3
+# -all-databases
 mysqlDatabases=""
 
-# Каталог хранения локальных бекапов
+# Каталог хранения локальных бекапов MySQL
 mysqlBackupsDir="${scriptDir}/backups/mysql"
 
-# Использовать AWS для хранения MySQL дампов 
+# Использовать AWS для хранения MySQL дампов
 mysqlUseAws=no
