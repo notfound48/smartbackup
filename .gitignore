@@ -1,2 +1,5 @@
-config.test
-logs
+/config
+/logs
+/filesExclude
+/backups/
+/meta/

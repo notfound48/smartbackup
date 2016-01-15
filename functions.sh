@@ -112,3 +112,10 @@ mysqlBackup(){
 	fi
 
 }
+
+# Синхронизация Read-only контента
+syncReadOnly(){
+
+	loging "Syncing Read-only files with AWS"
+
+}
