@@ -16,6 +16,22 @@ loging "Start backup files"
 nowMonth=`date +%m`
 nowDay=`date +%d`
 
+# Синхронизация read-only контента
+# При синхронизации создать tmp список исключений архивиррования
+# В него добавить все записи из filesRO c добавление ./имя папки/*
+if [ "$filesUseRO" == "yes" ];
+	then 
+
+	loging "Syncing Read-Only контент"
+
+	while read item; do
+
+    	rsync -avzul ${filesTargetDir}/${item} ${filesBackupsDir}/readOnly/
+
+	done < <( egrep -v '^ *(#|$)' < "${filesExclude}")
+
+fi
+
 if [ ! -f ${filesBackupsDir}/meta/${nowMonth}/full ];
 	then
 
@@ -41,6 +57,7 @@ loging "Clearing old files backups"
 find ${filesBackupsDir}/archives -type d -mtime +$[$filesMonthsCount*31] | xargs rm -rf
 find ${filesBackupsDir}/meta -type d -mtime +$[$filesMonthsCount*31] | xargs rm -rf
 
+# Синхронизация с AWS
 if [ "$filesUseAws" == "yes" ];
 	then
 

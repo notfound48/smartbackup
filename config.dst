@@ -33,7 +33,13 @@ filesBackupsDir="${scriptDir}/backups/files"
 filesExclude="${scriptDir}/filesExclude"
 
 # Параметры запуска tar
-filesTarCreateParam="--create --ignore-failed-read --gzip"						
+filesTarCreateParam="--create --ignore-failed-read --gzip"
+
+# Список каталогов с read-only контентом
+filesExclude="${scriptDir}/filesRO"
+
+# Использовать синхронизация read-only контента
+filesUseRO=yes				
 
 # Использовать AWS для хранения файловых бекапов
 filesUseAws=no

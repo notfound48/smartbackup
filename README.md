@@ -9,7 +9,7 @@
 
 ## Подготовка к установке
 ```
-sudo apt-get update && apt-get install git s3cmd
+sudo apt-get update && apt-get install git s3cmd rsync
 
 git clone https://github.com/notfound48/amazonBackup.git
 
