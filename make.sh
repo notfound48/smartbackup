@@ -75,7 +75,7 @@ if [ "$mysqlMakeBackups" == "yes" ];
 
 	loging "Clearing old MySQL backups"
 
-	find ${mysqlBackupsDir} -type d -mtime +$[$filesMonthsCount*31] | xargs rm -rf
+	find ${mysqlBackupsDir} -type d -mtime +${mysqlDaysCount} | xargs rm -rf
 
 	if [ "$mysqlUseAws" == "yes" ];
 	then
