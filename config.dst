@@ -36,7 +36,7 @@ filesExclude="${scriptDir}/filesExclude"
 filesTarCreateParam="--create --ignore-failed-read --gzip"
 
 # Список каталогов с read-only контентом
-filesExclude="${scriptDir}/filesRO"
+filesRO="${scriptDir}/filesRO"
 
 # Использовать синхронизация read-only контента
 filesUseRO=no				

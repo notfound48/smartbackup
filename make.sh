@@ -28,7 +28,7 @@ if [ "$filesUseRO" == "yes" ];
 
     	rsync -avzul ${filesTargetDir}/${item} ${filesBackupsDir}/readOnly/
 
-	done < <( egrep -v '^ *(#|$)' < "${filesExclude}")
+	done < <( egrep -v '^ *(#|$)' < "${filesRO}")
 
 fi
 
