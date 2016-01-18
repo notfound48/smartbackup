@@ -39,7 +39,7 @@ filesTarCreateParam="--create --ignore-failed-read --gzip"
 filesExclude="${scriptDir}/filesRO"
 
 # Использовать синхронизация read-only контента
-filesUseRO=yes				
+filesUseRO=no				
 
 # Использовать AWS для хранения файловых бекапов
 filesUseAws=no
