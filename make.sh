@@ -46,8 +46,8 @@ if [ ! -f ${filesBackupsDir}/meta/${nowMonth}/full ];
 
 	loging "Clearing old files backups"
 
-	find ${filesBackupsDir}/archives -type d -mtime +$[$filesMonthsCount*31] | xargs rm -rf
-	find ${filesBackupsDir}/meta -type d -mtime +$[$filesMonthsCount*31] | xargs rm -rf
+	find ${filesBackupsDir}/archives/* -type d -mtime +$[$filesMonthsCount*31] | xargs rm -rf
+	find ${filesBackupsDir}/meta/* -type d -mtime +$[$filesMonthsCount*31] | xargs rm -rf
 
 fi
 
@@ -75,7 +75,7 @@ if [ "$mysqlMakeBackups" == "yes" ];
 
 	loging "Clearing old MySQL backups"
 
-	find ${mysqlBackupsDir} -type d -mtime +${mysqlDaysCount} | xargs rm -rf
+	find ${mysqlBackupsDir}/* -type d -mtime +${mysqlDaysCount} | xargs rm -rf
 
 	if [ "$mysqlUseAws" == "yes" ];
 	then
