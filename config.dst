@@ -6,6 +6,9 @@
 # Настройки локали
 export LANG=en_US.UTF-8
 
+# Название проекта для идентификации
+serverName=""
+
 # Почта для извещений
 mainReportMail=""
 

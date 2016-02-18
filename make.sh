@@ -17,7 +17,7 @@ nowMonth=`date +%m`
 nowDay=`date +%d`
 
 # Синхронизация read-only контента
-# При синхронизации создать tmp список исключений архивиррования
+# При синхронизации создать tmp список исключений архивирования
 # В него добавить все записи из filesRO c добавление ./имя папки/*
 if [ "$filesUseRO" == "yes" ];
 	then 
@@ -26,7 +26,7 @@ if [ "$filesUseRO" == "yes" ];
 
 	while read item; do
 
-    	rsync -avzul ${filesTargetDir}/${item} ${filesBackupsDir}/readOnly/
+    	(rsync -avzul ${filesTargetDir}/${item} ${filesBackupsDir}/readOnly/ ) 2>> ${scriptDir}/runTimeErrors
 
 	done < <( egrep -v '^ *(#|$)' < "${filesRO}")
 
@@ -88,4 +88,18 @@ if [ "$mysqlMakeBackups" == "yes" ];
 
 fi
 
+# Проверка наличия ошибок выполнения
+if [ -s ${scriptDir}/runTimeErrors ]  
+then  
+
+	loging "Have errors! Reporting..."
+
+    cat ${scriptDir}/runTimeErrors | tee -a ${scriptDir}/logs | mail -s "ERROR backuping on ${serverName}" ${mainReportMail}
+
+    rm ${scriptDir}/runTimeErrors
+
+fi  
+
 loging "Finish working"
+
+exit
