@@ -88,7 +88,6 @@ if [ "$mysqlMakeBackups" == "yes" ];
 
 fi
 
-<<<<<<< HEAD
 # Проверка наличия ошибок выполнения
 if [ -s ${scriptDir}/runTimeErrors ]  
 then  
