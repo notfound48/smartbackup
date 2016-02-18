@@ -17,7 +17,7 @@ nowMonth=`date +%m`
 nowDay=`date +%d`
 
 # Синхронизация read-only контента
-# При синхронизации создать tmp список исключений архивирования
+# При синхронизации создать tmp список исключений архивиррования
 # В него добавить все записи из filesRO c добавление ./имя папки/*
 if [ "$filesUseRO" == "yes" ];
 	then 
@@ -46,8 +46,8 @@ if [ ! -f ${filesBackupsDir}/meta/${nowMonth}/full ];
 
 	loging "Clearing old files backups"
 
-	find ${filesBackupsDir}/archives -type d -mtime +$[$filesMonthsCount*31] | xargs rm -rf
-	find ${filesBackupsDir}/meta -type d -mtime +$[$filesMonthsCount*31] | xargs rm -rf
+	find ${filesBackupsDir}/archives/* -type d -mtime +$[$filesMonthsCount*31] | xargs rm -rf
+	find ${filesBackupsDir}/meta/* -type d -mtime +$[$filesMonthsCount*31] | xargs rm -rf
 
 fi
 
@@ -75,7 +75,7 @@ if [ "$mysqlMakeBackups" == "yes" ];
 
 	loging "Clearing old MySQL backups"
 
-	find ${mysqlBackupsDir} -type d -mtime +${mysqlDaysCount} | xargs rm -rf
+	find ${mysqlBackupsDir}/* -type d -mtime +${mysqlDaysCount} | xargs rm -rf
 
 	if [ "$mysqlUseAws" == "yes" ];
 	then
@@ -88,6 +88,7 @@ if [ "$mysqlMakeBackups" == "yes" ];
 
 fi
 
+<<<<<<< HEAD
 # Проверка наличия ошибок выполнения
 if [ -s ${scriptDir}/runTimeErrors ]  
 then  
@@ -100,6 +101,6 @@ then
 
 fi  
 
-loging "Finish working"
-
 exit
+
+loging "Finish working"
