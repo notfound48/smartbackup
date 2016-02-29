@@ -70,7 +70,7 @@ mysqlPassword=""
 # Варианты:
 # dbname
 # --databases db1 db2 db3
-# -all-databases
+# --all-databases
 mysqlDatabases=""
 
 # Каталог хранения локальных бекапов MySQL
@@ -81,3 +81,34 @@ mysqlDaysCount=7
 
 # Использовать AWS для хранения MySQL дампов
 mysqlUseAws=no
+
+##############################
+# Настройки бэкапа PosgreSQL #
+##############################
+
+# Резервировать PosgreSQL
+posrgresqlMakeBackups=no
+
+# Адрес PosgreSQL сервера
+posrgresqlHost="127.0.0.1"
+
+# Адрес PosgreSQL клиента
+posrgresqlFromHost="127.0.0.1"
+
+# Порт PosgreSQL сервера
+posrgresqlPort="5432"
+
+# Пользователь PosgreSQL
+posrgresqlUser="postgres"
+
+# Базы данных PosgreSQL
+posrgresqlDbList="${scriptDir}/pgDbList"
+
+# Каталог хранения локальных бекапов PosgreSQL
+posrgresqlBackupsDir="${scriptDir}/backups/posrgresql"
+
+# Колличество хранимых дневных PosgreSQL бекапов
+posrgresqlDaysCount=7
+
+# Использовать AWS для хранения PosgreSQL дампов
+posrgresqlUseAws=no

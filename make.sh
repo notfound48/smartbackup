@@ -22,7 +22,7 @@ nowDay=`date +%d`
 if [ "$filesUseRO" == "yes" ];
 	then 
 
-	loging "Syncing Read-Only контент"
+	loging "Syncing Read-Only content"
 
 	while read item; do
 
@@ -83,6 +83,27 @@ if [ "$mysqlMakeBackups" == "yes" ];
 	loging "Syncing with AWS"
 
 	s3cmd --acl-private --bucket-location=EU --guess-mime-type sync ${mysqlBackupsDir}/ s3://${awsBucketName}/mysql/
+
+	fi
+
+fi
+
+# PostgreSQL бекап
+if [ "$posrgresqlMakeBackups" == "yes" ];
+	then
+
+	posrgresqlBackup 
+
+	loging "Clearing old posrgreSQL backups"
+
+	find ${posrgresqlBackupsDir}/* -type d -mtime +${posrgresqlDaysCount} | xargs rm -rf
+
+	if [ "$posrgresqlUseAws" == "yes" ];
+	then
+
+	loging "Syncing with AWS"
+
+	s3cmd --acl-private --bucket-location=EU --guess-mime-type sync ${posrgresqlBackupsDir}/ s3://${awsBucketName}/posrgresql/
 
 	fi
 

@@ -27,7 +27,26 @@ mysqlBackup(){
 
 	mkdir -p ${mysqlBackupsDir}/${nowMonth}
 
+	export MYSQL_PWD=${mysqlPassword}
+
 	( mysqldump -h ${mysqlHost} -P ${mysqlPort} \
-	 -u ${mysqlUser} -p${mysqlPassword} ${mysqlDatabases} | gzip > ${mysqlBackupsDir}/${nowMonth}/${nowDay}.sql.gz ) 2>> ${scriptDir}/runTimeErrors
+	 -u ${mysqlUser} --single-transaction ${mysqlDatabases} | gzip > ${mysqlBackupsDir}/${nowMonth}/${nowDay}.sql.gz ) 2>> ${scriptDir}/runTimeErrors
+
+}
+
+# Бэкап PostgreSQL
+posrgresqlBackup(){
+
+	loging "Making PostgreSQL backup"
+
+	mkdir -p ${posrgresqlBackupsDir}/${nowMonth}
+
+	while read item; do
+
+		( pg_dump -U ${posrgresqlUser} -h ${posrgresqlHost} \
+	 	-p ${posrgresqlPort} ${item} | gzip > ${posrgresqlBackupsDir}/${nowMonth}/${nowDay}.${item}.sql.gz  ) 2>> ${scriptDir}/runTimeErrors		
+
+	done < <( egrep -v '^ *(#|$)' < "${posrgresqlDbList}")
+
 
 }
