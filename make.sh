@@ -16,54 +16,60 @@ loging "Start backup files"
 nowMonth=`date +%m`
 nowDay=`date +%d`
 
-# Синхронизация read-only контента
-# При синхронизации создать tmp список исключений архивирования
-# В него добавить все записи из filesRO c добавление ./имя папки/*
-if [ "$filesUseRO" == "yes" ];
-	then 
-
-	loging "Syncing Read-Only content"
-
-	while read item; do
-
-    	(rsync -avzul ${filesTargetDir}/${item} ${filesBackupsDir}/readOnly/ ) 2>> ${scriptDir}/runTimeErrors
-
-	done < <( egrep -v '^ *(#|$)' < "${filesRO}")
-
-fi
-
-if [ ! -f ${filesBackupsDir}/meta/${nowMonth}/full ];
+# Файловый бекап
+if [ "$filesMakeBackups" == "yes" ];
 	then
 
-	loging "Making full month backup ${nowMonth}"
+	# Синхронизация read-only контента
+	# При синхронизации создать tmp список исключений архивирования
+	# В него добавить все записи из filesRO c добавление ./имя папки/*
+	if [ "$filesUseRO" == "yes" ];
+		then 
 
-	mkdir -p ${filesBackupsDir}/meta/${nowMonth}
-	mkdir -p ${filesBackupsDir}/archives/${nowMonth}
+		loging "Syncing Read-Only content"
 
-	rm -f ${filesBackupsDir}/meta/${nowMonth}/full
+		while read item; do
 
-	tarBackup ${nowMonth}/full
+    		(rsync -avzul ${filesTargetDir}/${item} ${filesBackupsDir}/readOnly/ ) 2>> ${scriptDir}/runTimeErrors
 
-	loging "Clearing old files backups"
+		done < <( egrep -v '^ *(#|$)' < "${filesRO}")
 
-	find ${filesBackupsDir}/archives/* -type d -mtime +$[$filesMonthsCount*31] | xargs rm -rf
-	find ${filesBackupsDir}/meta/* -type d -mtime +$[$filesMonthsCount*31] | xargs rm -rf
+	fi
 
-fi
+	if [ ! -f ${filesBackupsDir}/meta/${nowMonth}/full ];
+		then
 
-loging "Making incremental regular backup ${nowMonth}/${nowDay}"
+		loging "Making full month backup ${nowMonth}"
 
-cp ${filesBackupsDir}/meta/${nowMonth}/full ${filesBackupsDir}/meta/${nowMonth}/${nowDay}
+		mkdir -p ${filesBackupsDir}/meta/${nowMonth}
+		mkdir -p ${filesBackupsDir}/archives/${nowMonth}
 
-tarBackup ${nowMonth}/${nowDay}
+		rm -f ${filesBackupsDir}/meta/${nowMonth}/full
 
-# Синхронизация с AWS
-if [ "$filesUseAws" == "yes" ];
-	then
+		tarBackup ${nowMonth}/full
 
-	loging "Syncing with AWS"
+		loging "Clearing old files backups"
 
-	s3cmd --acl-private --bucket-location=EU --guess-mime-type sync ${filesBackupsDir}/ s3://${awsBucketName}/files/
+		find ${filesBackupsDir}/archives/* -type d -mtime +$[$filesMonthsCount*31] | xargs rm -rf
+		find ${filesBackupsDir}/meta/* -type d -mtime +$[$filesMonthsCount*31] | xargs rm -rf
+
+	fi
+
+	loging "Making incremental regular backup ${nowMonth}/${nowDay}"
+
+	cp ${filesBackupsDir}/meta/${nowMonth}/full ${filesBackupsDir}/meta/${nowMonth}/${nowDay}
+
+	tarBackup ${nowMonth}/${nowDay}
+
+	# Синхронизация с AWS
+	if [ "$filesUseAws" == "yes" ];
+		then
+
+		loging "Syncing with AWS"
+
+		s3cmd --acl-private --bucket-location=EU --guess-mime-type sync ${filesBackupsDir}/ s3://${awsBucketName}/files/
+
+	fi
 
 fi
 
