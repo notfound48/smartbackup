@@ -3,3 +3,5 @@ logs
 filesExclude
 filesRO
 /backups
+runTimeErrors
+.s3cfg
