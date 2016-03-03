@@ -24,4 +24,6 @@ cd s3cmd/
 python setup.py install
 
 s3cmd --configure
+
+mv ~/.s3cfg /path/to/script/root
 ```
