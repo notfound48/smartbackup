@@ -11,8 +11,6 @@ source "${scriptDir}/functions.sh"
 
 loging "Start working"
 
-loging "Start backup files"
-
 nowMonth=`date +%m`
 nowDay=`date +%d`
 
@@ -20,6 +18,8 @@ nowDay=`date +%d`
 if [ "$filesMakeBackups" == "yes" ];
 	then
 
+	loging "Start backup files"
+	
 	# Синхронизация read-only контента
 	# При синхронизации создать tmp список исключений архивирования
 	# В него добавить все записи из filesRO c добавление ./имя папки/*
