@@ -26,4 +26,6 @@ python setup.py install
 s3cmd --configure
 
 mv ~/.s3cfg /path/to/script/root
+
+ln -s /usr/local/bin/s3cmd /usr/bin/
 ```

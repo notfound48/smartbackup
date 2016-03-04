@@ -50,9 +50,6 @@ if [ "$filesMakeBackups" == "yes" ];
 
 		loging "Clearing old files backups"
 
-		find ${filesBackupsDir}/archives/* -type d -mtime +$[$filesMonthsCount*31] | xargs rm -rf
-		find ${filesBackupsDir}/meta/* -type d -mtime +$[$filesMonthsCount*31] | xargs rm -rf
-
 	fi
 
 	loging "Making incremental regular backup ${nowMonth}/${nowDay}"
@@ -60,6 +57,9 @@ if [ "$filesMakeBackups" == "yes" ];
 	cp ${filesBackupsDir}/meta/${nowMonth}/full ${filesBackupsDir}/meta/${nowMonth}/${nowDay}
 
 	tarBackup ${nowMonth}/${nowDay}
+
+	find ${filesBackupsDir}/archives/* -type d -mtime +$[$filesMonthsCount*31] | xargs rm -rf
+	find ${filesBackupsDir}/meta/* -type d -mtime +$[$filesMonthsCount*31] | xargs rm -rf
 
 	# Синхронизация с AWS
 	if [ "$filesUseAws" == "yes" ];
@@ -127,6 +127,10 @@ then
 
 fi  
 
-exit
-
 loging "Finish working"
+
+<<<<<<< HEAD
+loging "Finish working"
+=======
+exit
+>>>>>>> e6c7c459e4f049febfe24c6881d3e321552a64a5

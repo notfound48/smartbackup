@@ -5,3 +5,4 @@ filesRO
 /backups
 runTimeErrors
 .s3cfg
+pgDbList
