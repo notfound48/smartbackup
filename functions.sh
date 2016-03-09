@@ -9,14 +9,11 @@ loging(){
 # $1 - имя файла мета-данных
 tarBackup(){
 
-		# Перемещаемся в целевой каталог
-		cd ${filesTargetDir}
 
 		( tar $filesTarCreateParam --file=${filesBackupsDir}/archives/$1.tar.gz \
-		--listed-incremental=${filesBackupsDir}/meta/$1 --exclude-from=${filesExclude} ./ ) 2>> ${scriptDir}/runTimeErrors
-
-		# Вернулись в каталог скрипта
-		cd ${scriptDir}
+		--listed-incremental=${filesBackupsDir}/meta/$1 \
+		--exclude-from=${scriptDir}/tmpFilesExclude \
+		--files-from=${scriptDir}/filesList ) 2>> ${scriptDir}/runTimeErrors
 		
 }
 
@@ -46,7 +43,7 @@ posrgresqlBackup(){
 		( pg_dump -U ${posrgresqlUser} -h ${posrgresqlHost} \
 	 	-p ${posrgresqlPort} ${item} | gzip > ${posrgresqlBackupsDir}/${nowMonth}/${nowDay}.${item}.sql.gz  ) 2>> ${scriptDir}/runTimeErrors		
 
-	done < <( egrep -v '^ *(#|$)' < "${posrgresqlDbList}")
+	done < <( egrep -v '^ *(#|$)' < "${scriptDir}/pgDbList")
 
 }
 

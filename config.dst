@@ -22,51 +22,32 @@ awsBucketName=""
 # Настройки бэкапа файлов #
 ###########################
 
-# Резервировать файлы
-filesMakeBackups=no
+filesMakeBackups=no # Резервировать файлы
 
-# Резервируемый каталог
-filesTargetDir=""
+filesMonthsCount=1 # Количество месяцев хранения
 
-# Количество месяцев хранения
-filesMonthsCount=3
+filesBackupsDir="${scriptDir}/backups/files" # Каталог хранения локальных бекапов файлов
 
-# Каталог хранения локальных бекапов файлов							
-filesBackupsDir="${scriptDir}/backups/files"
+filesTarCreateParam="--create --ignore-failed-read --gzip --absolute-names" # Параметры запуска tar
 
-# Список исключаемых файлов
-filesExclude="${scriptDir}/filesExclude"
+filesUseRO=no # Использовать синхронизация read-only контента
 
-# Параметры запуска tar
-filesTarCreateParam="--create --ignore-failed-read --gzip"
-
-# Список каталогов с read-only контентом
-filesRO="${scriptDir}/filesRO"
-
-# Использовать синхронизация read-only контента
-filesUseRO=no				
-
-# Использовать AWS для хранения файловых бекапов
-filesUseAws=no
+filesUseAws=no # Использовать AWS для хранения файловых бекапов
 
 ###########################
 # Настройки бэкапа MySQL  #
 ###########################
 
-# Резервировать MySQL
-mysqlMakeBackups=no
 
-# Адрес MySQL сервера
-mysqlHost="127.0.0.1"
+mysqlMakeBackups=no # Резервировать MySQL
 
-# Порт MySQL сервера
-mysqlPort="3306"
+mysqlHost="127.0.0.1" # Адрес MySQL сервера
 
-# Пользователь MySQL														
-mysqlUser=""
+mysqlPort="3306" # Порт MySQL сервера
 
-# Пароль MySQL
-mysqlPassword=""
+mysqlUser="" # Пользователь MySQL
+
+mysqlPassword=""# Пароль MySQL
 
 # Перечень Баз для резервирования
 # Варианты:
@@ -75,42 +56,28 @@ mysqlPassword=""
 # --all-databases
 mysqlDatabases=""
 
-# Каталог хранения локальных бекапов MySQL
-mysqlBackupsDir="${scriptDir}/backups/mysql"
+mysqlBackupsDir="${scriptDir}/backups/mysql" # Каталог хранения локальных бекапов MySQL
 
-# Колличество хранимых дневных MySQL бекапов
-mysqlDaysCount=7
+mysqlDaysCount=7 # Колличество хранимых дневных MySQL бекапов
 
-# Использовать AWS для хранения MySQL дампов
-mysqlUseAws=no
+mysqlUseAws=no # Использовать AWS для хранения MySQL дампов
 
 ##############################
 # Настройки бэкапа PosgreSQL #
 ##############################
 
-# Резервировать PosgreSQL
-posrgresqlMakeBackups=no
+posrgresqlMakeBackups=no # Резервировать PosgreSQL
 
-# Адрес PosgreSQL сервера
-posrgresqlHost="127.0.0.1"
+posrgresqlHost="127.0.0.1" # Адрес PosgreSQL сервера
 
-# Адрес PosgreSQL клиента
-posrgresqlFromHost="127.0.0.1"
+posrgresqlFromHost="127.0.0.1" # Адрес PosgreSQL клиента
 
-# Порт PosgreSQL сервера
-posrgresqlPort="5432"
+posrgresqlPort="5432" # Порт PosgreSQL сервера
 
-# Пользователь PosgreSQL
-posrgresqlUser="postgres"
+posrgresqlUser="postgres" # Пользователь PosgreSQL
 
-# Базы данных PosgreSQL
-posrgresqlDbList="${scriptDir}/pgDbList"
+posrgresqlBackupsDir="${scriptDir}/backups/posrgresql" # Каталог хранения локальных бекапов PosgreSQL
 
-# Каталог хранения локальных бекапов PosgreSQL
-posrgresqlBackupsDir="${scriptDir}/backups/posrgresql"
+posrgresqlDaysCount=7 # Колличество хранимых дневных PosgreSQL бекапов
 
-# Колличество хранимых дневных PosgreSQL бекапов
-posrgresqlDaysCount=7
-
-# Использовать AWS для хранения PosgreSQL дампов
-posrgresqlUseAws=no
+posrgresqlUseAws=no # Использовать AWS для хранения PosgreSQL дампов

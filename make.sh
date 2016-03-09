@@ -19,57 +19,84 @@ if [ "$filesMakeBackups" == "yes" ];
 	then
 
 	loging "Start backup files"
-	
-	# Синхронизация read-only контента
-	# При синхронизации создать tmp список исключений архивирования
-	# В него добавить все записи из filesRO c добавление ./имя папки/*
+
+	rm -f ${scriptDir}/tmpFilesExclude
+
 	if [ "$filesUseRO" == "yes" ];
 		then 
 
 		loging "Syncing Read-Only content"
 
-		while read item; do
+		if [ ! -s ${scriptDir}/filesRO ]
+			then
 
-    		(rsync -avzul ${filesTargetDir}/${item} ${filesBackupsDir}/readOnly/ ) 2>> ${scriptDir}/runTimeErrors
+			loging "No content to synchronize. Maybe have not filesRO or empty?"
 
-		done < <( egrep -v '^ *(#|$)' < "${filesRO}")
+			else
+
+			mkdir -p ${filesBackupsDir}/readOnly/
+
+			while read item; do
+
+    			(rsync -avzul ${filesTargetDir}/${item} ${filesBackupsDir}/readOnly/ ) 2>> ${scriptDir}/runTimeErrors
+
+    			echo "${item}/*" >> ${scriptDir}/tmpFilesExclude
+
+			done < <( egrep -v '^ *(#|$)' < "${scriptDir}/filesRO")
+
+		fi
 
 	fi
 
-	if [ ! -f ${filesBackupsDir}/meta/${nowMonth}/full ];
+	if [ ! -s ${scriptDir}/filesList ]
 		then
 
-		loging "Making full month backup ${nowMonth}"
+			loging "No content to backuping. Maybe have not filesList or empty?"
 
-		mkdir -p ${filesBackupsDir}/meta/${nowMonth}
-		mkdir -p ${filesBackupsDir}/archives/${nowMonth}
+		else
 
-		rm -f ${filesBackupsDir}/meta/${nowMonth}/full
+		if [ -s ${scriptDir}/filesExclude ];
+			then
 
-		tarBackup ${nowMonth}/full
+			cat ${scriptDir}/filesExclude >> ${scriptDir}/tmpFilesExclude
 
-		loging "Clearing old files backups"
+		fi
 
+		if [ ! -f ${filesBackupsDir}/meta/${nowMonth}/full ];
+			then
+
+			loging "Making full month backup ${nowMonth}"
+
+			mkdir -p ${filesBackupsDir}/meta/${nowMonth}
+			mkdir -p ${filesBackupsDir}/archives/${nowMonth}
+
+			tarBackup ${nowMonth}/full
+
+			loging "Clearing old files backups"
+
+		fi
+
+		loging "Making incremental regular backup ${nowMonth}/${nowDay}"
+
+		cp ${filesBackupsDir}/meta/${nowMonth}/full ${filesBackupsDir}/meta/${nowMonth}/${nowDay}
+
+		tarBackup ${nowMonth}/${nowDay}
+
+		find ${filesBackupsDir}/archives/* -type d -mtime +$[$filesMonthsCount*31] | xargs rm -rf
+		find ${filesBackupsDir}/meta/* -type d -mtime +$[$filesMonthsCount*31] | xargs rm -rf
+
+		# Синхронизация с AWS
+		if [ "$filesUseAws" == "yes" ];
+			then
+
+			loging "Syncing with AWS"
+
+			syncWithAWS ${filesBackupsDir} files
+
+		fi
 	fi
 
-	loging "Making incremental regular backup ${nowMonth}/${nowDay}"
-
-	cp ${filesBackupsDir}/meta/${nowMonth}/full ${filesBackupsDir}/meta/${nowMonth}/${nowDay}
-
-	tarBackup ${nowMonth}/${nowDay}
-
-	find ${filesBackupsDir}/archives/* -type d -mtime +$[$filesMonthsCount*31] | xargs rm -rf
-	find ${filesBackupsDir}/meta/* -type d -mtime +$[$filesMonthsCount*31] | xargs rm -rf
-
-	# Синхронизация с AWS
-	if [ "$filesUseAws" == "yes" ];
-		then
-
-		loging "Syncing with AWS"
-
-		syncWithAWS ${filesBackupsDir} files
-
-	fi
+	rm -f ${scriptDir}/tmpFilesExclude
 
 fi
 
@@ -98,25 +125,34 @@ fi
 if [ "$posrgresqlMakeBackups" == "yes" ];
 	then
 
-	posrgresqlBackup 
+	if [ ! -s ${scriptDir}/pgDbList ]
+		then
 
-	loging "Clearing old posrgreSQL backups"
+		loging "No BDs to backuping. Maybe have not pgDbList or empty?"
 
-	find ${posrgresqlBackupsDir}/* -type d -mtime +${posrgresqlDaysCount} | xargs rm -rf
+		else
 
-	if [ "$posrgresqlUseAws" == "yes" ];
-	then
+		posrgresqlBackup 
 
-	loging "Syncing with AWS"
+		loging "Clearing old posrgreSQL backups"
 
-	syncWithAWS sync ${posrgresqlBackupsDir} posrgresql
+		find ${posrgresqlBackupsDir}/* -type d -mtime +${posrgresqlDaysCount} | xargs rm -rf
 
+		if [ "$posrgresqlUseAws" == "yes" ];
+			then
+
+			loging "Syncing with AWS"
+
+			syncWithAWS sync ${posrgresqlBackupsDir} posrgresql
+
+		fi
+		
 	fi
 
 fi
 
 # Проверка наличия ошибок выполнения
-if [ -s ${scriptDir}/runTimeErrors ]  
+if [ -s ${scriptDir}/runTimeErrors ]
 then  
 
 	loging "Have errors! Reporting..."
