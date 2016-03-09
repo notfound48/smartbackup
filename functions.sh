@@ -48,5 +48,11 @@ posrgresqlBackup(){
 
 	done < <( egrep -v '^ *(#|$)' < "${posrgresqlDbList}")
 
+}
+
+# Синхронизация с AWS
+syncWithAWS(){
+
+	s3cmd -c ${scriptDir}/.s3cfg --acl-private --delete-removed --guess-mime-type sync $1/ s3://${awsBucketName}/$2/
 
 }

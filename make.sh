@@ -67,7 +67,7 @@ if [ "$filesMakeBackups" == "yes" ];
 
 		loging "Syncing with AWS"
 
-		s3cmd -c ${scriptDir}/.s3cfg --acl-private --bucket-location=EU --delete-removed --guess-mime-type sync ${filesBackupsDir}/ s3://${awsBucketName}/files/
+		syncWithAWS ${filesBackupsDir} files
 
 	fi
 
@@ -88,7 +88,7 @@ if [ "$mysqlMakeBackups" == "yes" ];
 
 	loging "Syncing with AWS"
 
-	s3cmd -c ${scriptDir}/.s3cfg --acl-private --bucket-location=EU --delete-removed --guess-mime-type sync ${mysqlBackupsDir}/ s3://${awsBucketName}/mysql/
+	syncWithAWS ${mysqlBackupsDir} mysql
 
 	fi
 
@@ -109,7 +109,7 @@ if [ "$posrgresqlMakeBackups" == "yes" ];
 
 	loging "Syncing with AWS"
 
-	s3cmd -c ${scriptDir}/.s3cfg --acl-private --bucket-location=EU --delete-removed --guess-mime-type sync ${posrgresqlBackupsDir}/ s3://${awsBucketName}/posrgresql/
+	syncWithAWS sync ${posrgresqlBackupsDir} posrgresql
 
 	fi
 
