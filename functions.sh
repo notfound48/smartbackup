@@ -1,6 +1,6 @@
-# Логгировние 
+# Логгировние
 loging(){
-	
+
 	echo [`date +'%x %H:%M:%S'`] $1 | tee -a ${scriptDir}/logs
 
 }
@@ -14,7 +14,7 @@ tarBackup(){
 		--listed-incremental=${filesBackupsDir}/meta/$1 \
 		--exclude-from=${scriptDir}/tmpFilesExclude \
 		--files-from=${scriptDir}/filesList ) 2>> ${scriptDir}/runTimeErrors
-		
+
 }
 
 # Бэкап MySQL
@@ -41,7 +41,7 @@ posrgresqlBackup(){
 	while read item; do
 
 		( pg_dump -U ${posrgresqlUser} -h ${posrgresqlHost} \
-	 	-p ${posrgresqlPort} ${item} | gzip > ${posrgresqlBackupsDir}/${nowMonth}/${nowDay}.${item}.sql.gz  ) 2>> ${scriptDir}/runTimeErrors		
+	 	-p ${posrgresqlPort} ${item} | gzip > ${posrgresqlBackupsDir}/${nowMonth}/${nowDay}.${item}.sql.gz  ) 2>> ${scriptDir}/runTimeErrors
 
 	done < <( egrep -v '^ *(#|$)' < "${scriptDir}/pgDbList")
 

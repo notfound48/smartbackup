@@ -23,7 +23,7 @@ if [ "$filesMakeBackups" == "yes" ];
 	rm -f ${scriptDir}/tmpFilesExclude
 
 	if [ "$filesUseRO" == "yes" ];
-		then 
+		then
 
 		loging "Syncing Read-Only content"
 
@@ -104,7 +104,7 @@ fi
 if [ "$mysqlMakeBackups" == "yes" ];
 	then
 
-	mysqlBackup 
+	mysqlBackup
 
 	loging "Clearing old MySQL backups"
 
@@ -132,7 +132,7 @@ if [ "$posrgresqlMakeBackups" == "yes" ];
 
 		else
 
-		posrgresqlBackup 
+		posrgresqlBackup
 
 		loging "Clearing old posrgreSQL backups"
 
@@ -143,17 +143,17 @@ if [ "$posrgresqlMakeBackups" == "yes" ];
 
 			loging "Syncing with AWS"
 
-			syncWithAWS sync ${posrgresqlBackupsDir} posrgresql
+			syncWithAWS ${posrgresqlBackupsDir} posrgresql
 
 		fi
-		
+
 	fi
 
 fi
 
 # Проверка наличия ошибок выполнения
 if [ -s ${scriptDir}/runTimeErrors ]
-then  
+then
 
 	loging "Have errors! Reporting..."
 
@@ -161,7 +161,7 @@ then
 
     rm ${scriptDir}/runTimeErrors
 
-fi  
+fi
 
 loging "Finish working"
 
