@@ -72,8 +72,6 @@ if [ "$filesMakeBackups" == "yes" ];
 
 			tarBackup ${nowMonth}/full
 
-			loging "Clearing old files backups"
-
 		fi
 
 		loging "Making incremental regular backup ${nowMonth}/${nowDay}"
@@ -81,6 +79,8 @@ if [ "$filesMakeBackups" == "yes" ];
 		cp ${filesBackupsDir}/meta/${nowMonth}/full ${filesBackupsDir}/meta/${nowMonth}/${nowDay}
 
 		tarBackup ${nowMonth}/${nowDay}
+
+		loging "Clearing old files backups"
 
 		find ${filesBackupsDir}/archives/* -type d -mtime +$[$filesMonthsCount*31] | xargs rm -rf
 		find ${filesBackupsDir}/meta/* -type d -mtime +$[$filesMonthsCount*31] | xargs rm -rf

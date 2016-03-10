@@ -23,11 +23,15 @@ git clone https://github.com/s3tools/s3cmd.git
 cd s3cmd/
 python setup.py install
 
+ln -s /usr/local/bin/s3cmd /usr/bin/
+
+su username
+
 s3cmd --configure
 
 mv ~/.s3cfg /path/to/script/root
 
-ln -s /usr/local/bin/s3cmd /usr/bin/
+
 ```
 
 ## Синхронизация ReadOnly контента
