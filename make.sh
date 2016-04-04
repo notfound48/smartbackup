@@ -136,7 +136,7 @@ if [ "$posrgresqlMakeBackups" == "yes" ];
 
 		loging "Clearing old posrgreSQL backups"
 
-		find ${posrgresqlBackupsDir}/* -type d -mtime +${posrgresqlDaysCount} | xargs rm -rf
+		find ${posrgresqlBackupsDir}/* -type f -mtime +${posrgresqlDaysCount} | xargs rm -rf
 
 		if [ "$posrgresqlUseAws" == "yes" ];
 			then
