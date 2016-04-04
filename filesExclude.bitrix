@@ -1,8 +1,8 @@
-./bitrix/tmp/*
-./bitrix/updates/*
-./bitrix/backup/*
-./bitrix/*cache/*
-./upload/resize_cache/*
+*/bitrix/tmp/*
+*/bitrix/updates/*
+*/bitrix/backup/*
+*/bitrix/*cache/*
+*/upload/resize_cache/*
 */upload/tmp/*
 */upload/preview/*
 *.log
