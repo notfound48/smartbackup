@@ -3,3 +3,6 @@
 ./bitrix/backup/*
 ./bitrix/*cache/*
 ./upload/resize_cache/*
+*/upload/tmp/*
+*/upload/preview/*
+*.log
