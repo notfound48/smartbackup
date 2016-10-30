@@ -26,8 +26,18 @@ mysqlBackup(){
 
 	export MYSQL_PWD=${mysqlPassword}
 
-	( mysqldump -h ${mysqlHost} -P ${mysqlPort} \
-	 -u ${mysqlUser} --single-transaction ${mysqlDatabases} | gzip > ${mysqlBackupsDir}/${nowMonth}/${nowDay}.sql.gz ) 2>> ${scriptDir}/runTimeErrors
+	if [ $mysqlDatabases = "--all-databases" ]; then
+
+		databases=`mysql  -h ${mysqlHost} -P ${mysqlPort} -u ${mysqlUser} -e "SHOW DATABASES;" | grep -Ev "(Database|information_schema|performance_schema)"`
+
+		for database in $databases; do
+  			( mysqldump -h ${mysqlHost} -P ${mysqlPort} -u ${mysqlUser} --databases ${database} | gzip > ${mysqlBackupsDir}/${nowMonth}/${nowDay}_${db}.sql.gz ) 2>> ${scriptDir}/runTimeErrors
+		done
+
+	else
+		( mysqldump -h ${mysqlHost} -P ${mysqlPort} \
+	 	-u ${mysqlUser} --single-transaction ${mysqlDatabases} | gzip > ${mysqlBackupsDir}/${nowMonth}/${nowDay}.sql.gz ) 2>> ${scriptDir}/runTimeErrors
+	fi
 
 }
 
@@ -41,7 +51,7 @@ posrgresqlBackup(){
 	while read item; do
 
 		( pg_dump -U ${posrgresqlUser} -h ${posrgresqlHost} \
-	 	-p ${posrgresqlPort} ${item} | gzip > ${posrgresqlBackupsDir}/${nowMonth}/${nowDay}.${item}.sql.gz  ) 2>> ${scriptDir}/runTimeErrors
+	 	-p ${posrgresqlPort} ${item} | gzip > ${posrgresqlBackupsDir}/${nowMonth}/${nowDay}_${item}.sql.gz  ) 2>> ${scriptDir}/runTimeErrors
 
 	done < <( egrep -v '^ *(#|$)' < "${scriptDir}/pgDbList")
 
