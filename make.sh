@@ -72,8 +72,6 @@ if [ "$filesMakeBackups" == "yes" ];
 
 			tarBackup ${nowMonth}/full
 
-			loging "Clearing old files backups"
-
 		fi
 
 		loging "Making incremental regular backup ${nowMonth}/${nowDay}"
@@ -81,6 +79,8 @@ if [ "$filesMakeBackups" == "yes" ];
 		cp ${filesBackupsDir}/meta/${nowMonth}/full ${filesBackupsDir}/meta/${nowMonth}/${nowDay}
 
 		tarBackup ${nowMonth}/${nowDay}
+
+		loging "Clearing old files backups"
 
 		find ${filesBackupsDir}/archives/* -type d -mtime +$[$filesMonthsCount*31] | xargs rm -rf
 		find ${filesBackupsDir}/meta/* -type d -mtime +$[$filesMonthsCount*31] | xargs rm -rf
@@ -108,7 +108,7 @@ if [ "$mysqlMakeBackups" == "yes" ];
 
 	loging "Clearing old MySQL backups"
 
-	find ${mysqlBackupsDir}/* -type d -mtime +${mysqlDaysCount} | xargs rm -rf
+	find ${mysqlBackupsDir}/* -type f -mtime +${mysqlDaysCount} | xargs rm -rf
 
 	if [ "$mysqlUseAws" == "yes" ];
 	then
@@ -136,7 +136,7 @@ if [ "$posrgresqlMakeBackups" == "yes" ];
 
 		loging "Clearing old posrgreSQL backups"
 
-		find ${posrgresqlBackupsDir}/* -type d -mtime +${posrgresqlDaysCount} | xargs rm -rf
+		find ${posrgresqlBackupsDir}/* -type f -mtime +${posrgresqlDaysCount} | xargs rm -rf
 
 		if [ "$posrgresqlUseAws" == "yes" ];
 			then
