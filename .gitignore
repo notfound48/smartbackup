@@ -7,3 +7,4 @@ filesRO
 runTimeErrors
 .s3cfg
 pgDbList
+tmpFilesExclude
