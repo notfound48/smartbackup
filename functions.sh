@@ -26,7 +26,7 @@ mysqlBackup(){
 
 	export MYSQL_PWD=${mysqlPassword}
 
-	if [ $mysqlDatabases = "--all-databases" ]; then
+	if [ "$mysqlDatabases" = "--all-databases" ]; then
 
 		databases=`mysql  -h ${mysqlHost} -P ${mysqlPort} -u ${mysqlUser} -e "SHOW DATABASES;" | grep -Ev "(Database|information_schema|performance_schema)"`
 
