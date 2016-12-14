@@ -20,7 +20,7 @@ if [ "$filesMakeBackups" == "yes" ];
 
 	loging "Start backup files"
 
-	rm -f ${scriptDir}/tmpFilesExclude
+	echo "" > ${scriptDir}/tmpFilesExclude
 
 	if [ "$filesUseRO" == "yes" ];
 		then
