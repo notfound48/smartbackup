@@ -10,15 +10,15 @@
 * Оповещение о неудачных бекапах на e-mail
 
 ## Подготовка к установке
-```
+```bash
 sudo apt-get update && apt-get install git s3cmd rsync
 
 git clone https://github.com/notfound48/amazonBackup.git
 
 ```
 
-## Установка s3cmd
-```
+## Установка s3cmd для синхронизации с Amazon
+```bash
 git clone https://github.com/s3tools/s3cmd.git
 cd s3cmd/
 python setup.py install
@@ -31,9 +31,21 @@ s3cmd --configure
 
 mv ~/.s3cfg /path/to/script/root
 
-
 ```
+## Установка rclone для синхронизации с Selectel
+```bash
+curl -O http://downloads.rclone.org/rclone-current-linux-amd64.zip
+unzip rclone-current-linux-amd64.zip
+cd rclone-*-linux-amd64
 
+sudo cp rclone /usr/sbin/
+sudo chown root:root /usr/sbin/rclone
+sudo chmod 755 /usr/sbin/rclone
+
+rclone config
+
+# Настройки: https://habrahabr.ru/company/selectel/blog/305514/
+```
 ## Синхронизация ReadOnly контента
 ```
 Файл filesRO содержит список каталогов которые содержат только пополняемы контент
