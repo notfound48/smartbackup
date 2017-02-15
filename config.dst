@@ -39,6 +39,7 @@ filesUseRO=no # Использовать синхронизация read-only к
 filesUseAws=no # Использовать AWS для хранения файловых бекапов
 
 filesUseSelectel=no # Использовать Selectel для хранения файлов
+
 ###########################
 # Настройки бэкапа MySQL  #
 ###########################
@@ -67,6 +68,8 @@ mysqlDaysCount=7 # Колличество хранимых дневных MySQL 
 
 mysqlUseAws=no # Использовать AWS для хранения MySQL дампов
 
+mysqlUseSelectel=no # Использовать Selectel для хранения MySQL дампов
+
 ##############################
 # Настройки бэкапа PosgreSQL #
 ##############################
@@ -86,3 +89,5 @@ posrgresqlBackupsDir="${scriptDir}/backups/posrgresql" # Каталог хран
 posrgresqlDaysCount=7 # Колличество хранимых дневных PosgreSQL бекапов
 
 posrgresqlUseAws=no # Использовать AWS для хранения PosgreSQL дампов
+
+posrgresqlUseSelectel=no # Использовать Selectel для хранения PosgreSQL дампов

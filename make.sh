@@ -121,14 +121,26 @@ if [ "$mysqlMakeBackups" == "yes" ];
 
 	find ${mysqlBackupsDir}/* -type f -mtime +${mysqlDaysCount} | xargs rm -rf
 
+	# Синхронизация с AWS
 	if [ "$mysqlUseAws" == "yes" ];
-	then
+		then
 
 	loging "Syncing with AWS"
 
 	syncWithAWS ${mysqlBackupsDir} mysql
 
 	fi
+
+        # Синхронизация с Selectel
+        if [ "$mysqlUseSelectel" == "yes" ];
+        	then
+
+        loging "Syncing with Selectel"
+
+        syncWithSelectel ${mysqlBackupsDir} mysql
+
+        fi
+
 
 fi
 
@@ -149,6 +161,7 @@ if [ "$posrgresqlMakeBackups" == "yes" ];
 
 		find ${posrgresqlBackupsDir}/* -type f -mtime +${posrgresqlDaysCount} | xargs rm -rf
 
+		# Синхронизация с AWS
 		if [ "$posrgresqlUseAws" == "yes" ];
 			then
 
@@ -157,6 +170,17 @@ if [ "$posrgresqlMakeBackups" == "yes" ];
 			syncWithAWS ${posrgresqlBackupsDir} posrgresql
 
 		fi
+
+	        # Синхронизация с Selectel
+        	if [ "$posrgresqlUseSelectel" == "yes" ];
+                	then
+
+        	loging "Syncing with Selectel"
+
+        	syncWithSelectel ${posrgresqlBackupsDir} posrgresql
+
+        	fi
+
 
 	fi
 
