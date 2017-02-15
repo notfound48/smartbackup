@@ -74,6 +74,6 @@ syncWithAWS(){
 # Синхронизация с хранилищем Selectel
 syncWithSelectel(){
 
-	rclone sync $1 selectel:${selectelBucketName}/$2
+	rclone sync $1 selectel:${selectelBucketName}/$2 --ignore-size
 
 }
