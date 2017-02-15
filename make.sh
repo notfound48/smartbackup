@@ -94,6 +94,17 @@ if [ "$filesMakeBackups" == "yes" ];
 			syncWithAWS ${filesBackupsDir} files
 
 		fi
+
+                # Синхронизация с Selectel
+                if [ "$filesUseSelectel" == "yes" ];
+                        then
+
+                        loging "Syncing with Selectel"
+
+                        syncWithSelectel ${filesBackupsDir} files
+
+                fi
+
 	fi
 
 	rm -f ${scriptDir}/tmpFilesExclude

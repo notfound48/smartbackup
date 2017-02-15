@@ -70,3 +70,10 @@ syncWithAWS(){
 	s3cmd -c ${scriptDir}/.s3cfg --acl-private --delete-removed --guess-mime-type sync $1/ s3://${awsBucketName}/$2/
 
 }
+
+# Синхронизация с хранилищем Selectel
+syncWithSelectel(){
+
+	rclone sync $1 selectel:${selectelBucketName}/$2
+
+}
