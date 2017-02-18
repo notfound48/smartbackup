@@ -6,5 +6,6 @@ filesRO
 /backups
 runTimeErrors
 .s3cfg
+.rclone.conf
 pgDbList
 tmpFilesExclude
