@@ -42,7 +42,7 @@ mysqlBackup(){
 
 	for database in $databases; do
   	
-  		( mysqldump -h ${mysqlHost} -P ${mysqlPort} -u ${mysqlUser} --single-transaction --databases ${database} | gzip > ${mysqlBackupsDir}/${nowMonth}/${nowDay}_${database}.sql.gz ) 2>> ${scriptDir}/runTimeErrors
+  		( mysqldump -h ${mysqlHost} -P ${mysqlPort} -u ${mysqlUser} --single-transaction ${mysqlOptions} --databases ${database} | gzip > ${mysqlBackupsDir}/${nowMonth}/${nowDay}_${database}.sql.gz ) 2>> ${scriptDir}/runTimeErrors
 	
 	done
 

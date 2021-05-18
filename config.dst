@@ -55,6 +55,8 @@ mysqlUser="" # Пользователь MySQL
 
 mysqlPassword="" # Пароль MySQL
 
+mysqlOptions="" # Дополнителные опции (bitrix example: --ignore-table=database_name.b_xml_tree)
+
 # Перечень Баз для резервирования
 # Варианты:
 # dbname
